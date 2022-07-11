@@ -1,0 +1,7 @@
+data <- read.csv("C:\\Users\\tyto4\\OneDrive\\Dokumente\\0_Winfo_MA\\SS22_IR\\IR-African_Conflicts-VAD\\Daten\\Africa_1997-2020_Jan08.csv", header = TRUE, sep = ";")
+data <- transform(data, count = ave(data$COUNTRY, data$COUNTRY, FUN = length))  
+fatal_sum_country <- aggregate(data$FATALITIES, by=list(data$COUNTRY,data$count), sum)
+colnames(fatal_sum_country) <- c("COUNTRY", "NUMBERCONFLICT","FATALITIES")
+fatal_sum_country_region <- merge(x = data[c("COUNTRY","REGION")], y = fatal_sum_country, by="COUNTRY")                          
+fatal_sum_country_region <- unique(fatal_sum_country_region)                   
+write.csv(fatal_sum_country_region,"C:\\Users\\tyto4\\OneDrive\\Dokumente\\0_Winfo_MA\\SS22_IR\\IR-African_Conflicts-VAD\\Daten\\FaCoRe.csv")
